@@ -1,0 +1,12 @@
+{
+  "name": "stupidbot",
+  "version": "1.0.0",
+  "description": "A stupid bot",
+  "main": "index.js",
+  "type": "commonjs",
+  "author": "HerrCraziDev <herrcrazi@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^13.6.0"
+  }
+}
