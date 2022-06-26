@@ -1,25 +1,33 @@
 
 import { Client, ClientOptions, Message } from 'discord.js';
 import { token } from '../config.json';
+import { CommandManager } from './CommandManager';
 import { Logger } from './Logger';
 import { BaseModule, Module } from './Module';
 
 import { modules } from './ModuleLoader';
+import { awaitAll } from './Utils';
 
 export class Baka extends Client {
     private modules: Array<Module> = [];
     public quitting: boolean;
     private logger: Logger = new Logger("Baka");
+    public commands: CommandManager;
 
     constructor(options: ClientOptions) {
         super(options);
+
+        this.commands = new CommandManager();
 
         for (const module of modules) {
             let mod = new module(this);
             this.modules.push(mod);
             this.logger.log(`Loaded module ${mod.mod_name}`);
         }
+        
         ['beforeExit', 'SIGUSR1', 'SIGUSR2', 'SIGINT', 'SIGTERM'].map(event => process.once(event, this.exit.bind(this)));
+        
+        awaitAll(this.modules, (module) => module.init() );
     }
 
     public async login() {

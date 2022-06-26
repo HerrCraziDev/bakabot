@@ -9,7 +9,11 @@ export class ExampleModule extends BaseModule {
     constructor(client: Baka) {
         super("ExampleModule", client);
 
-        // Early hooks (like onReady) goes here
+        // Early hooks (like 'ready') goes here
+    }
+
+    public async init() {
+        // Async initialization goes here. (IO, requests, etc) This runs before 'ready'
     }
 
     public async run() {

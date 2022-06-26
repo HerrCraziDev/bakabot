@@ -21,7 +21,7 @@ export abstract class BaseModule implements Module {
         this.logger = new Logger(name);
     }
     
-    // abstract init(): Promise<any>
+    public abstract init(): Promise<any>
     public abstract run(): Promise<any>
     public abstract stop(): Promise<boolean>
 

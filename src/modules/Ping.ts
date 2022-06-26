@@ -9,8 +9,10 @@ export class Ping extends BaseModule {
 
     constructor(client: Baka) {
         super("Ping", client);
-
-        client.on('messageCreate', (message) => this.respond(message));
+    }
+    
+    public async init() {
+        this.client.on('messageCreate', (message) => this.respond(message));
     }
 
     public async run() {
@@ -25,7 +27,7 @@ export class Ping extends BaseModule {
         // this.logger.log(message.mentions);
 
         if (message.mentions.has(this.client.user.id, { ignoreEveryone: true, ignoreRoles: true })) {
-            await message.reply(`Baka! g:\`${message.guildId}\` c:\`${message.channelId}\` t:\`${message.channel.isThread()}\``);
+            await message.reply(`Baka! \`g:${message.guildId} c:${message.channelId} t:${message.channel.isThread()}\``);
             this.logger.log(`Baka! g:${message.guildId} c:${message.channelId} t:${message.channel.isThread()}`);
         }
     }
