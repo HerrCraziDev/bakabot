@@ -1,6 +1,6 @@
 
 import { Client, ClientOptions, Message } from 'discord.js';
-import { token } from '../config.json';
+import { token, prefix } from '../config.json';
 import { CommandManager } from './CommandManager';
 import { Logger } from './Logger';
 import { BaseModule, Module } from './Module';
@@ -17,7 +17,7 @@ export class Baka extends Client {
     constructor(options: ClientOptions) {
         super(options);
 
-        this.commands = new CommandManager();
+        this.commands = new CommandManager(this, prefix);
 
         for (const module of modules) {
             let mod = new module(this);
