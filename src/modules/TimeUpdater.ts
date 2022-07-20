@@ -7,22 +7,26 @@ import { BaseModule } from '../Module';
 export class TimeUpdater extends BaseModule {
     readonly mod_name: string = "TimeUpdater";
     readonly mod_desc: string = "Good Heavens, look at the stev!";
-
+    
     client: Baka
     guild: Guild
     user: GuildMember
-
+    
     private _timeout: NodeJS.Timeout
     private _initialName: string;
-
+    
     constructor(client: Baka) {
         super("TimeUpdater", client);
-
-        this.client.on('ready', () => { this.init(guild_id, user_id) });
+        
+        this.client.on('ready', () => { this.getUser(guild_id, user_id) });
         this.client.on('messageCreate', (message) => this.respond(message) );
     }
+    
+    public async init() {
+        
+    }
 
-    protected async init(guild_id: Snowflake, user_id: Snowflake) {
+    protected async getUser(guild_id: Snowflake, user_id: Snowflake) {
         try {
             this.guild = await this.client.guilds.fetch(guild_id);
             this.logger.log(`Guild found : ${this.guild.name}@${this.guild.id}`);
