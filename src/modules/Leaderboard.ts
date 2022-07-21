@@ -136,13 +136,11 @@ export class Leaderboard extends BaseModule {
     }
 
     private setupTimers() {
-        const throttled_update = throttle(() => this.logger.log("Update triggered"), 2000);
+        const throttled_update = throttle(() => this.updateLeaderboard(), 2000);
         this.client.on("messageCreate", (message) => {
-            this.logger.debug(message.content);
             if (message.channel.id === this.channel.id && !message.author.bot && message.content.match(config.expr)) {
                 let prev = this.scores.get(message.author.id) ?? 0;
                 this.scores.set(message.author.id, prev++);
-                this.logger.debug("Matched")
                 throttled_update();
             }
         })

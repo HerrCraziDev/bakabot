@@ -1,4 +1,4 @@
-
+import { dev } from '../config.json';
 
 export class Logger {
     private readonly classname: string;
@@ -20,7 +20,7 @@ export class Logger {
     }
 
     public debug(message, ...args) {
-        console.debug(`[\x1b[33m${this.classname}\x1b[0m] DEBUG ${message}`, ...args);
+        if (dev) console.debug(`[\x1b[33m${this.classname}\x1b[0m] DEBUG ${message}`, ...args);
     }
 }
 
