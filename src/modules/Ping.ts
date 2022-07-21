@@ -12,7 +12,7 @@ export class Ping extends BaseModule {
     }
     
     public async init() {
-        this.client.on('messageCreate', (message) => this.respond(message));
+        this.client.commands.register("ping", (message) => this.ping(message));
     }
 
     public async run() {
@@ -23,12 +23,8 @@ export class Ping extends BaseModule {
         return true;
     }
 
-    private async respond(message: Message) {
-        // this.logger.log(message.mentions);
-
-        if (message.mentions.has(this.client.user.id, { ignoreEveryone: true, ignoreRoles: true })) {
-            await message.reply(`Baka! \`g:${message.guildId} c:${message.channelId} t:${message.channel.isThread()}\``);
-            this.logger.log(`Baka! g:${message.guildId} c:${message.channelId} t:${message.channel.isThread()}`);
-        }
+    private async ping(message: Message) {
+        await message.reply(`Baka! \`g:${message.guildId} c:${message.channelId} t:${message.channel.isThread()}\``);
+        this.logger.log(`Baka! g:${message.guildId} c:${message.channelId} t:${message.channel.isThread()}`);
     }
 }
