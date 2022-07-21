@@ -9,11 +9,15 @@ const guild_id = "471264108642172929";
 export class VideoGrabber extends BaseModule {
     readonly mod_name: string = "VideoGrabber";
     readonly mod_desc: string = "Grabbing all youtube videos in a channel";
-
+    
     constructor(client: Baka) {
         super("VideoGrabber", client);
-
+        
         this.client.on('ready', () => this.run() );
+    }
+    
+    public async init() {
+        
     }
 
     public async run() {
