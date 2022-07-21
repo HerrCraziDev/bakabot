@@ -9,3 +9,22 @@ export async function awaitAll(values: Iterable<any>, caller: (v: any) => Promis
 
     return await Promise.allSettled(promises);
 }
+
+export function throttle(callback: () => void, limit: number) {
+    var waiting = false;
+    var need_last_run = false;
+    return function () {
+        if (!waiting) {
+            callback.apply(this, arguments);
+            waiting = true;
+            setTimeout(() => {
+                waiting = false;
+                if (need_last_run) {
+                    
+                }
+            }, limit);
+        } else {
+            need_last_run = true;
+        }
+    };
+}
