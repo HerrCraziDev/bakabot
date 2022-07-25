@@ -94,15 +94,16 @@ export class Leaderboard extends BaseModule {
             });
         }
 
-        let lb_contents: MessageOptions = {
+        let lb_contents = {
             embeds: [{
                 title: `:wave: Top Coucou :wave:`,
                 description: `Meilleurs agents du chaos.\n*En partenariat avec le [Gouvernement Indien](https://youtu.be/vTIIMJ9tUc8?t=102), l'[élite de la nation](https://www.facebook.com/messages/t/1679521542131560) et le [Saint Spam](https://www.spam.com/varieties/spam-classic)*`,
                 thumbnail: { url: 'https://media.discordapp.net/attachments/410964674520154112/999294128321990686/baka.png' },
                 color: 0xffaa00,
                 fields: fields,
+                timestamp: new Date(),
                 footer: {
-                    text: this.client.user.username,
+                    text: `${this.client.user.username}::${this.mod_name}`,
                     icon_url: this.client.user.displayAvatarURL()
                 }
             }]
@@ -136,11 +137,11 @@ export class Leaderboard extends BaseModule {
     }
 
     private setupTimers() {
-        const throttled_update = throttle(() => this.updateLeaderboard(), 2000);
+        const throttled_update = throttle(() => this.updateLeaderboard(), 6000);
         this.client.on("messageCreate", (message) => {
             if (message.channel.id === this.channel.id && !message.author.bot && message.content.match(config.expr)) {
                 let prev = this.scores.get(message.author.id) ?? 0;
-                this.scores.set(message.author.id, prev++);
+                this.scores.set(message.author.id, prev + 1);
                 throttled_update();
             }
         })
