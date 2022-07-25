@@ -20,7 +20,8 @@ export function throttle(callback: () => void, limit: number) {
             setTimeout(() => {
                 waiting = false;
                 if (need_last_run) {
-                    
+                    callback.apply(this, arguments);
+                    need_last_run = false;
                 }
             }, limit);
         } else {
