@@ -5,3 +5,5 @@ yarn.lock
 **/*.js
 config.json
 matches.txt
+package-lock.json
+data/**
