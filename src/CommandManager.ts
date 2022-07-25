@@ -27,11 +27,11 @@ export class CommandManager {
         return true;
     }
 
-    public execute(name: string, message: Message) {
+    public async execute(name: string, message: Message) {
         this.logger.log(`Command ${name} triggered by ${message.author.username} in ${(message.channel as TextChannel).name}`);
 
         // Perfectly condensed efficient codechad (just say 'no' to JS optimizations) *leaves stack*
-        return ( this.commands.get(name) ?? (() => { throw new Error(`No command matching '${name}'.`); }) )(message);
+        return await ( this.commands.get(name) ?? (() => { throw new Error(`No command matching '${name}'.`); }) )(message);
 
         // Virgin multiline verbous bloat
         let command = this.commands.get(name);
@@ -42,7 +42,7 @@ export class CommandManager {
         }
     }
 
-    private evaluate(message: Message) {
+    private async evaluate(message: Message) {
         if ( !message.author.bot && (message.mentions.has(this.client.user.id, { ignoreEveryone: true, ignoreRoles: true }) || message.content?.startsWith(this.prefix)) ) {
             let name: string;
             if (message.content?.startsWith(this.prefix)) {
@@ -54,7 +54,7 @@ export class CommandManager {
             if (!name) return;
 
             try {
-                this.execute(name, message);
+                await this.execute(name, message);
             } catch (error) {
                 this.logger.error(error);
                 message.reply({

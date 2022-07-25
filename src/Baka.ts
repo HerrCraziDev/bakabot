@@ -1,4 +1,5 @@
 
+import { REST } from '@discordjs/rest';
 import { Client, ClientOptions, Message } from 'discord.js';
 import { token, prefix } from '../config.json';
 import { CommandManager } from './CommandManager';
@@ -8,15 +9,17 @@ import { BaseModule, Module } from './Module';
 import { modules } from './ModuleLoader';
 import { awaitAll } from './Utils';
 
+
 export class Baka extends Client {
     private modules: Array<Module> = [];
     public quitting: boolean;
     private logger: Logger = new Logger("Baka");
     public commands: CommandManager;
+    public _rest: REST;
 
     constructor(options: ClientOptions) {
         super(options);
-
+        this._rest = new REST({version: '10'}).setToken(token);
         this.commands = new CommandManager(this, prefix);
 
         for (const module of modules) {

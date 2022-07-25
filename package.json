@@ -7,6 +7,8 @@
   "author": "HerrCraziDev <herrcrazi@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@discordjs/rest": "^1.0.0",
+    "discord-api-types": "^0.36.3",
     "discord.js": "^13.6.0"
   }
 }
